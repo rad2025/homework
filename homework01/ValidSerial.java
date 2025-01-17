@@ -19,20 +19,44 @@ public class ValidSerial
    
    // Method isSerialValid
    
-   public static boolean isSerialValid(String serialNum)
-   {
-      boolean outcome = true;
+   public static boolean isSerialValid(String serialNum) {
+    //Check if the string is exactly length = 5
+    if (serialNum.length() != 5) {
+        return false;
+    }
 
+    //Check if the 1st and 2nd characters are uppercase and adjacent 
+    char firstChar = serialNum.charAt(0);
+    char secondChar = serialNum.charAt(1);
 
+    if (!Character.isUpperCase(firstChar) || !Character.isUpperCase(secondChar)) {
+        return false;
+    }
+    if (Math.abs(firstChar - secondChar) != 1) {
+        return false;
+    }
 
-          // Enter validation code here
+    //Check if the 3rd, 4th, 5th characters are digits
+    char thirdChar = serialNum.charAt(2);
+    char fourthChar = serialNum.charAt(3);
+    char fifthChar = serialNum.charAt(4);
 
+    if (!Character.isDigit(thirdChar) || !Character.isDigit(fourthChar) || !Character.isDigit(fifthChar)) {
+        return false;
+    }
 
+    //calculate the sum of the numerical digits
+    int digitSum = Character.getNumericValue(thirdChar) +
+                   Character.getNumericValue(fourthChar) +
+                   Character.getNumericValue(fifthChar);
 
+    //Check if the sum of the digits is divisible by 3
+    if (digitSum % 3 == 0) {
+        return false;
+    }
 
-      return outcome;
-   }
-   
-   
-}
+    //When all conditions are met, return true
+    return true;
+} }
+
 
