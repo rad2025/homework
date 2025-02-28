@@ -12,7 +12,7 @@ public class SortSearchRecurse
         int test4[] = {92, 85, 77, 64, 52, 33, 49, 20, 14, 2};  // DESC - not sorted
 
         // Search ascending array for a value
-        System.out.println(binarySearch(test1, 0, test1.length, 39));
+        System.out.println(binarySearch(test1, 0, test1.length - 1, 39));
 
         // Verify array in ascending order
         System.out.println(isSorted(0, test1));
@@ -21,7 +21,7 @@ public class SortSearchRecurse
         System.out.println(isSorted(0, test2));
 
         // Search descending array for a value
-        System.out.println(binarySearchDesc(test3, 0, test1.length, 14));
+        System.out.println(binarySearchDesc(test3, 0, test3.length - 1, 14));
 
         // Verify array in descending order
         System.out.println(isSortedDesc(0, test3));
@@ -29,7 +29,6 @@ public class SortSearchRecurse
         // Verify array in descending order
         System.out.println(isSortedDesc(0, test4));
     }  
-
 
     //***************************************************************
     // Binary search recursively - PRE: Array is sorted ASCENDING
@@ -70,19 +69,38 @@ public class SortSearchRecurse
     }
 
     //***************************************************************
+
     public static int binarySearchDesc(int array[], int first, int last, int value)
     {
+        int middle;
 
 
-        return 0;
+        //base case
+        if (first > last)
+            return -1;
+        
+        //need the middle index 
+        middle = (first + last) / 2;
+        
+        //case for if the middle matches
+        if (array[middle] == value)
+            return middle;
+   
+        if (array[middle] > value)  //while descending, search right for smaller values
+            return binarySearchDesc(array, middle + 1, last, value);
+        else //otherwise, search the left half
+            return binarySearchDesc(array, first, middle - 1, value);
     }
-
 
     //***************************************************************
     public static boolean isSortedDesc (int index, int array[])
     {
-
-
-        return false;
+        if (index < array.length - 1) {
+            if (array[index] < array[index + 1])  //descending order checker
+                return false;
+            else
+                return isSortedDesc(index + 1, array);
+        } else
+            return true;
     }
-} 
+}
