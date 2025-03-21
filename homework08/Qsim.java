@@ -12,8 +12,8 @@ public class Qsim
 
     public static void main(String args[])
     {
-        final int SIM_TIME = 240;                   // Number of time cycles
-        final double ENTRY_PROBABILITY = 1.0/12.0;  // Probability of new arrival per time cycle
+        final int SIM_TIME = 360;                   // Number of time cycles
+        final double ENTRY_PROBABILITY = 1.0/10.0;  // Probability of new arrival per time cycle
 
         randGenerator = new Random();    // For probability generation
 
@@ -37,6 +37,7 @@ public class Qsim
             {
                 theQueue.enqueue(time);
                 queueEntries++;
+                System.out.println("Customer arrives at: " + time + " minutes"); //testing
             }
 
             // If server becomes free
@@ -50,6 +51,8 @@ public class Qsim
                     wait = time - timeEnteredQueue;           // Determine time waited in queue
                     totalWaitTime += wait;                    // Accumulator and counter for later averaging
                     totalServed++;
+
+                    System.out.println("Customer now being serviced at: " + time + " minutes"); //testing
 
                     // Randomly determine time required to serve this new customer
                     toUntilServerFree = calcServiceTime();
@@ -73,8 +76,8 @@ public class Qsim
     // exits the queue.  It returns a random number from 8 ... 15.
     public static int calcServiceTime()
     {
-        int randVal = randGenerator.nextInt(8);
-        int serviceTime = randVal + 8;
+        int randVal = randGenerator.nextInt(6);
+        int serviceTime = randVal + 7;
 
         return serviceTime;
     }
