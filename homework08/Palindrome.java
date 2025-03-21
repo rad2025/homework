@@ -4,52 +4,76 @@
 
 import javax.swing.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+
 public class Palindrome 
 {
     public static void main(String[] args) 
     {
+        String[] fileNames = { "C:/Users/Getbe/OneDrive/Desktop/palindrome0.txt", "C:/Users/Getbe/OneDrive/Desktop/palindrome1.txt", "C:/Users/Getbe/OneDrive/Desktop/palindrome2.txt" };
 
-        String theWord = JOptionPane.showInputDialog(null, "Enter a string: ");
+        for (String fileName : fileNames) {
+            try {
+                //to read file content and process it
+                String sentence = readFileContent(fileName);
+                String processedSentence = cleanString(sentence);
+                if (isPalindrome(processedSentence)) {
+                    System.out.println("File: " + fileName + " - The sentence is a palindrome.");
+                } else {
+                    System.out.println("File: " + fileName + " - The sentence is NOT a palindrome.");
+                }
+            } catch (IOException e) {
+                System.out.println("Error reading the file: " + fileName);
+            }
+        }
+    }
+    //reads the file content so we can return as a string
+    public static String readFileContent(String fileName) throws IOException {
+        StringBuilder content = new StringBuilder();
+        Scanner fileScanner = new Scanner(new File(fileName));
 
-        if (isPalindrome(theWord)) {
-            JOptionPane.showMessageDialog(null, theWord + " is a palindrome");
-        } else {
-            JOptionPane.showMessageDialog(null, theWord + " is not a palindrome");
+        while (fileScanner.hasNextLine()) {
+            content.append(fileScanner.nextLine()).append(" ");
         }
 
-        System.exit(0);
+        fileScanner.close();
+        return content.toString().trim();
     }
+    //to clean the string (removes spaces, puncation, etc)
+    public static String cleanString(String input) {
+        return input.replaceAll("[^a-zA-Z]", "").toLowerCase();
+    }
+
 
     // This method receives a string object and returns TRUE
     // if the object represents a palindrom and FALSE otherwise
     public static boolean isPalindrome(String word) 
     {
-        StringQueue charQueue = new StringQueue(50);
-        StringStack charStack = new StringStack(50);
+        LinkedQueue<Character> charQueue = new LinkedQueue<>();
+        LinkedStack<Character> charStack = new LinkedStack<>();
          
         boolean palindromeOK = true;       // Assume a palindrom until detecting otherwise
 
         // Traverse characters of word, In sequence, push into a stack
         // and enqueue into a queue.
-        int len = word.length();
-        for (int i = 0; i < len; i++) 
-        {
-            charStack.push(word.substring(i,i+1));
-            charQueue.enqueue(word.substring(i,i+1));
+        //chnaged the for loop a little
+        for (char c : word.toCharArray()) {
+            charStack.push(c);
+            charQueue.enqueue(c);
         }
 
         // Pop and access characters in reverse order.  Match with
         // corresponding character in queue.  Any mismatch would
         // disqualify string as a palindrome
-        String fromQueue, fromStack;
-        while (!charStack.isEmpty()) {
-            // Get next characters from queue and stack
-            fromStack = charStack.pop();
-            fromQueue = charQueue.dequeue();
 
-            // Test for mismatch
-            if (! fromStack.equalsIgnoreCase(fromQueue))
+        //but now we compare charchteres from the stack with dequed charachters
+        while (!charStack.isEmpty()) {
+            if (!charStack.pop().equals(charQueue.dequeue())) {
                 palindromeOK = false;
+                break;
+            }
         }
 
         return palindromeOK;
