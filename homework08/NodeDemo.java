@@ -24,31 +24,18 @@ public class NodeDemo
         Node head;
         Node current;
 
-        head = new Node("C", null);
+        head = new Node("RED", null);
         current = head;
 
-        current.next = new Node("B", null);
+        current.next = new Node("WHITE", null);
         current = current.next;
 
-        current.next = new Node("A", null);
+        current.next = new Node("BLUE", null);
+
 
         writeIt(head);
 
-        //------------------------------------
-        Node temp;
-        current  = head;
-        temp  = current.next;
-        current.next  = current.next.next;
-        temp = null;
-
-        writeIt(head);
-
-        //------------------------------------
-        Node newnode  = new Node("B",null);
-        newnode.next  = head;
-        head  = newnode;
-
-        writeIt(head);
+        
     }
 
     // Given a linked data structure with a header pointer, write
