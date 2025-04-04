@@ -25,8 +25,7 @@ class LinkedList<ItemType>
     }    
     // --------------------------------------------------------------
      
-    private Node first;  // list head
-    private Node last;   // last element in list
+    private Node first;  // list head   
     
     private Node currentPos;  // Current position for iterator action
          
@@ -34,8 +33,7 @@ class LinkedList<ItemType>
     // No-arg constructor for linked list.  Declare empty; null out pointers
     public LinkedList()
     {
-        first = null;
-        last = null;        
+        first = null;        
     }
     
     // --------------------------------------------------------------
@@ -63,17 +61,9 @@ class LinkedList<ItemType>
     // Method adds an element to the front of the list
     public void add(ItemType newElementData)
     {
-        if (isEmpty())      // If list empty, simply add new element
-        {
-            first = new Node(newElementData);
-            last = first;
-        }
-        else               // Otherwise, add parameter element to front of list
-        {
-            Node newNode = new Node(newElementData);
-            newNode.next = first;  
-            first = newNode;
-        }         
+        Node newNode = new Node(newElementData);
+        newNode.next = first;
+        first = newNode;
     }
      
     // --------------------------------------------------------------
@@ -87,9 +77,7 @@ class LinkedList<ItemType>
         // Special case: element matched for deletion is first element
         if (element.equals(first.value))
         {
-            first = first.next;
-            if (first == null)
-                last = null;       
+            first = first.next;      
             return true;
         }
       
@@ -107,9 +95,6 @@ class LinkedList<ItemType>
         // Otherwise, element found and pred.next.value is element
         pred.next = pred.next.next;     // Bypass element to delete it
       
-        // Special case: check if pred is now last
-        if (pred.next == null)
-            last = pred;
       
         return true;       
     }
@@ -123,42 +108,35 @@ class LinkedList<ItemType>
     // Return:  boolean.  Found target or did not find target
     public boolean contains(ItemType target)
     {
-      boolean moreToSearch;
-      Node nodePtr;
-
-      nodePtr = first;                  // Start search from head of list
-      boolean found = false;            // Assume value not found
-      moreToSearch = (nodePtr != null);
-
-      while (moreToSearch && !found)
-      {
-          if (target.equals(nodePtr.value))
-          {
-             found = true;
-          }
-          else
-          {
-             nodePtr = nodePtr.next;
-             moreToSearch = (nodePtr != null);
-          }
-       }
-       return found;
-    }  
+        Node nodePtr = first;
+        while (nodePtr != null)
+        {
+            if (target.equals(nodePtr.value))
+                return true;
+            nodePtr = nodePtr.next;
+        }
+        return false;
+    }
 
     // --------------------------------------------------------------
     // Method adds an element to the end of the list
     public void append(ItemType newElementData)
     {
-        if (isEmpty())      // If list empty, simply add new element
+        Node newNode = new Node(newElementData);
+
+        if (isEmpty())
         {
-            first = new Node(newElementData);
-            last = first;
+            first = newNode;
         }
-        else               // Otherwise, add parameter element to end of list
+        else
         {
-            last.next = new Node(newElementData);  
-            last = last.next;
-        }      
+            Node curr = first;
+            while (curr.next != null)
+            {
+                curr = curr.next;
+            }
+            curr.next = newNode;
+        }
     }
 
     // --------------------------------------------------------------
