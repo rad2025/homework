@@ -6,14 +6,18 @@ public class TestLongNumbers
 {     
     public static void main(String [] args)
     {
-        LongInteger number1 = new LongInteger("number1.txt");
-        // LongInteger number1 = new LongInteger("bignumber1.txt");
+        LongInteger number1 = new LongInteger("3648305843", true);
+        LongInteger number2 = new LongInteger("92837465", true);
 
-        LongInteger number2 = new LongInteger("number2.txt");
-        // LongInteger number2 = new LongInteger("bignumber2.txt");
+        LongInteger sum = number1.addTo(number2);
 
-        LongInteger sum = number1.addTo(number2);         // Add the numbers
+        System.out.print("Number 1: ");
+        number1.writeToConsole();
 
-        sum.writeToFile("result.txt");      // Write the sum
+        System.out.print("Number 2: ");
+        number2.writeToConsole();
+
+        System.out.print("Sum: ");
+        sum.writeToConsole();
     }
 }
