@@ -55,6 +55,20 @@ public class LongInteger
             System.exit(0);
         }
     }
+    public LongInteger(String digitString, boolean fromString)
+    {
+        theNumber = new LinkedList<Integer>();
+
+        //to traverse string in reverse to match internal storage order
+        for (int i = digitString.length() - 1; i >= 0; i--)
+        {
+            char c = digitString.charAt(i);
+            if (Character.isDigit(c))
+            {
+                theNumber.add(Character.getNumericValue(c));
+            }
+        }
+    }
 
     // --------------------------------------------------------------
     // METHODS
@@ -148,5 +162,22 @@ public class LongInteger
             System.out.println("ERROR: Problem opening output file" + outputFilename);
             System.exit(0);
         }
+    }
+    public void writeToConsole()
+    {
+        LinkedStack<Integer> tempStack = new LinkedStack<Integer>();
+        this.theNumber.resetList();
+
+        while (!this.theNumber.atEnd())
+        {
+            tempStack.push(this.theNumber.getNextItem());
+        }
+
+        while (!tempStack.isEmpty())
+        {
+            System.out.print(tempStack.pop());
+        }
+
+        System.out.println();  
     }
 }
